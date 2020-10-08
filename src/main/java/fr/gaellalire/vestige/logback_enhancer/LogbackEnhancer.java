@@ -90,7 +90,7 @@ public class LogbackEnhancer {
         return privilegedClassloaders;
     }
 
-    public void enhance() throws Exception {
+    public static void enhance(final VestigeCoreContext vestigeCoreContext) throws Exception {
         final VestigeReaper vestigeReaper = vestigeCoreContext.getVestigeReaper();
 
         final ClassLoader classLoader = ClassLoader.getSystemClassLoader();
@@ -144,6 +144,11 @@ public class LogbackEnhancer {
             }
 
         });
+
+    }
+
+    public void enhance() throws Exception {
+        enhance(vestigeCoreContext);
 
         if (addShutdownHook != null || removeShutdownHook != null || privilegedClassloaders != null) {
             runEnhancedMain();

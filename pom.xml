@@ -143,7 +143,7 @@
     <vestige.core.version>8</vestige.core.version>
     <proxy_vole.version>java6-3</proxy_vole.version>
     <vestige.jpms.version>2.0</vestige.jpms.version>
-    <logback.version>1.2.4-SNAPSHOT</logback.version>
+    <logback.version>1.2.3.1</logback.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -169,7 +169,7 @@
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
+        <artifactId>logback-core</artifactId>
         <version>${logback.version}</version>
       </dependency>
     </dependencies>
@@ -317,7 +317,7 @@
     </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
+        <artifactId>logback-core</artifactId>
         <scope>provided</scope>
       </dependency>
   </dependencies>
