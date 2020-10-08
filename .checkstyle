@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
+  <local-check-config name="maven-checkstyle-plugin default" location="file:/Users/gaellalire/git/vestige.logback_enhancer/src/main/config/checkstyle_config.xml" type="remote" description="maven-checkstyle-plugin configuration default">
+    <property name="checkstyle.header.file" value="/Users/gaellalire/eclipse-workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/vestige.logback_enhancer/com.basistech.m2e.code.quality.checkstyleConfigurator/checkstyle-header-default.txt"/>
+    <property name="checkstyle.cache.file" value="${project_loc}/target/checkstyle-cachefile"/>
+  </local-check-config>
+  <fileset name="java-sources-default" enabled="true" check-config-name="maven-checkstyle-plugin default" local="true">
+    <file-match-pattern match-pattern="^src/main/java/.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="^src/main/java.*module-info\.java" include-pattern="false"/>
+    <file-match-pattern match-pattern="^src/main/java.*fr/gaellalire/vestige/logback_enhancer/JPMSLogbackEnhancer\.java" include-pattern="false"/>
+  </fileset>
+</fileset-config>

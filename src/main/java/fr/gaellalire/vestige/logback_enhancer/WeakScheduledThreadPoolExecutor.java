@@ -44,7 +44,7 @@ public class WeakScheduledThreadPoolExecutor extends WeakThreadPoolExecutor impl
         return new ScheduledFuture<T>() {
 
             @SuppressWarnings("unused")
-            final Runnable runnableHandler = runnable;
+            private Runnable runnableHandler = runnable;
 
             @Override
             public boolean cancel(final boolean mayInterruptIfRunning) {
@@ -87,7 +87,7 @@ public class WeakScheduledThreadPoolExecutor extends WeakThreadPoolExecutor impl
         return new ScheduledFuture<T>() {
 
             @SuppressWarnings("unused")
-            final Callable<?> callableHandler = callable;
+            private Callable<?> callableHandler = callable;
 
             @Override
             public boolean cancel(final boolean mayInterruptIfRunning) {

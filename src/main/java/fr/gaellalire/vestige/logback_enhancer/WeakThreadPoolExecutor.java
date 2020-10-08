@@ -55,7 +55,7 @@ public class WeakThreadPoolExecutor implements ExecutorService {
         return new Future<T>() {
 
             @SuppressWarnings("unused")
-            final Callable<?> callableHandler = callable;
+            private Callable<?> callableHandler = callable;
 
             @Override
             public boolean cancel(final boolean mayInterruptIfRunning) {
@@ -88,7 +88,7 @@ public class WeakThreadPoolExecutor implements ExecutorService {
         return new Future<T>() {
 
             @SuppressWarnings("unused")
-            final Runnable taskHandler = task;
+            private Runnable taskHandler = task;
 
             @Override
             public boolean cancel(final boolean mayInterruptIfRunning) {
