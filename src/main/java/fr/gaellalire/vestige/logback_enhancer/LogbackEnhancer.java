@@ -59,17 +59,17 @@ public class LogbackEnhancer {
 
     private Function<Thread, Void, RuntimeException> removeShutdownHook;
 
-    public void runEnhancedMain() throws Exception {
+    public Object runEnhancedMain() throws Exception {
         try {
             Method method = mainClass.getMethod("vestigeEnhancedCoreMain", VestigeCoreContext.class, Function.class, Function.class, List.class, String[].class);
-            method.invoke(null, new Object[] {vestigeCoreContext, addShutdownHook, removeShutdownHook, privilegedClassloaders, dargs});
+            return method.invoke(null, new Object[] {vestigeCoreContext, addShutdownHook, removeShutdownHook, privilegedClassloaders, dargs});
         } catch (NoSuchMethodException e) {
-            runMain();
+            return runMain();
         }
     }
 
-    public void runMain() throws Exception {
-        Vestige.runMain(null, mainClass, vestigeCoreContext, dargs);
+    public Object runMain() throws Exception {
+        return Vestige.runMain(null, mainClass, vestigeCoreContext, dargs);
     }
 
     public LogbackEnhancer(final Class<?> mainClass, final VestigeCoreContext vestigeCoreContext, final Function<Thread, Void, RuntimeException> addShutdownHook,
@@ -167,17 +167,17 @@ public class LogbackEnhancer {
 
     }
 
-    public void enhance() throws Exception {
+    public Object enhance() throws Exception {
         enhance(vestigeCoreContext);
 
         if (addShutdownHook != null || removeShutdownHook != null || privilegedClassloaders != null) {
-            runEnhancedMain();
+            return runEnhancedMain();
         } else {
-            runMain();
+            return runMain();
         }
     }
 
-    public static void vestigeEnhancedCoreMain(final VestigeCoreContext vestigeCoreContext, final Function<Thread, Void, RuntimeException> addShutdownHook,
+    public static Object vestigeEnhancedCoreMain(final VestigeCoreContext vestigeCoreContext, final Function<Thread, Void, RuntimeException> addShutdownHook,
             final Function<Thread, Void, RuntimeException> removeShutdownHook, final List<? extends ClassLoader> privilegedClassloaders, final String[] args) throws Exception {
         if (args.length == 0) {
             throw new IllegalArgumentException("Expecting at least 1 arg : mainClass");
@@ -188,17 +188,17 @@ public class LogbackEnhancer {
 
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
-        new LogbackEnhancer(contextClassLoader.loadClass(args[0]), vestigeCoreContext, addShutdownHook, removeShutdownHook, privilegedClassloaders, dargs).enhance();
+        return new LogbackEnhancer(contextClassLoader.loadClass(args[0]), vestigeCoreContext, addShutdownHook, removeShutdownHook, privilegedClassloaders, dargs).enhance();
     }
 
-    public static void vestigeCoreMain(final VestigeCoreContext vestigeCoreContext, final String[] args) throws Exception {
-        vestigeEnhancedCoreMain(vestigeCoreContext, null, null, null, args);
+    public static Object vestigeCoreMain(final VestigeCoreContext vestigeCoreContext, final String[] args) throws Exception {
+        return vestigeEnhancedCoreMain(vestigeCoreContext, null, null, null, args);
     }
 
     public static void main(final String[] args) throws Exception {
         final VestigeCoreContext vestigeCoreContext = VestigeCoreContext.buildDefaultInstance();
         URL.setURLStreamHandlerFactory(vestigeCoreContext.getStreamHandlerFactory());
-        vestigeCoreMain(vestigeCoreContext, args);
+        Vestige.runCallableLoop(vestigeCoreMain(vestigeCoreContext, args));
     }
 
 }
